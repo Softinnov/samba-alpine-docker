@@ -14,12 +14,6 @@ RUN mkdir /config /shared
 # copy config files from project folder to get a default config going for samba and supervisord
 COPY *.conf /config/
 
-# add a non-root user and group called "rio" with no password, no home dir, no shell, and gid/uid set to 1000
-RUN addgroup -g 1000 rio && adduser -D -H -G rio -s /bin/false -u 1000 rio
-
-# create a samba user matching our user from above with a very simple password ("letsdance")
-RUN echo -e "letsdance\nletsdance" | smbpasswd -a -s -c /config/smb.conf rio
-
 # volume mappings
 VOLUME /config /shared
 
